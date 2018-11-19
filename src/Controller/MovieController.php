@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Movie;
+use App\Form\MovieType;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,16 +16,41 @@ class MovieController extends AbstractController
         return $this->json($movies);
     }
 
-    public function create(MovieRepository $movieRepository, Request $request) {
-        return $this->json($movieRepository->createFromRequest($request));
+    public function create(EntityManagerInterface $entityManager, Request $request) {
+        $movie = new Movie();
+        $form = $this->createForm(MovieType::class, $movie);
+        $data = json_decode($request->getContent(), true);
+        $form->submit($data);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($movie);
+            $entityManager->flush();
+            return $this->json($movie);
+        }
+
+        return $this->json('400: Bad request', 400);
     }
 
     public function show(Movie $movie) {
+        if(!$movie) {
+            return $this->json('400: Bad request', 400);
+        }
+
         return $this->json($movie);
     }
 
-    public function update(Request $request, MovieRepository $movieRepository, Movie $movie) {
-        return $this->json($movieRepository->updateFromRequest($request, $movie));
+    public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie) {
+        $form = $this->createForm(MovieType::class, $movie);
+        $data = json_decode($request->getContent(), true);
+        $form->submit($data);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($movie);
+            $entityManager->flush();
+            return $this->json($movie);
+        }
+
+        return $this->json('400: Bad request', 400);
     }
 
     public function delete(EntityManagerInterface $entityManager, Movie $movie) {

@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends AbstractController
 {
     public function index(UserRepository $userRepository) {
-        $movies = $userRepository->findAll();
-        return $this->json($movies);
+        $users = $userRepository->findAll();
+        return $this->json($users);
     }
 
     public function create(EntityManagerInterface $entityManager, Request $request) {
