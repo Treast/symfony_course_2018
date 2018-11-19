@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Traits\JsonSerializerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +13,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
+    use JsonSerializerTrait;
+
     public function index(UserRepository $userRepository) {
         $users = $userRepository->findAll();
-        return $this->json($users);
+        return $this->serializeData($users);
     }
 
     public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
@@ -27,7 +30,7 @@ class UserController extends AbstractController
         if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->json($user);
+            return $this->serializeData($user);
         }
 
         return $this->json('400: Bad request', 400);
@@ -39,7 +42,7 @@ class UserController extends AbstractController
             return $this->json('400: Bad request', 400);
         }
 
-        return $this->json($user);
+        return $this->serializeData($user);
     }
 
     public function update(EntityManagerInterface $entityManager, Request $request, UserRepository $userRepository, string $uuid, ValidatorInterface $validator) {
@@ -57,7 +60,7 @@ class UserController extends AbstractController
         if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->json($user);
+            return $this->serializeData($user);
         }
 
         return $this->json('400: Bad request', 400);
