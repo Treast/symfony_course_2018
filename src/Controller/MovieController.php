@@ -33,7 +33,9 @@ class MovieController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function show(Movie $movie) {
+    public function show(MovieRepository $movieRepository, string $uuid) {
+        $movie = $movieRepository->findByUuid($uuid);
+
         if(!$movie) {
             return $this->json('400: Bad request', 400);
         }
@@ -41,7 +43,13 @@ class MovieController extends AbstractController
         return $this->json($movie);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie, ValidatorInterface $validator) {
+    public function update(EntityManagerInterface $entityManager, Request $request, MovieRepository $movieRepository, string $uuid, ValidatorInterface $validator) {
+        $movie = $movieRepository->findByUuid($uuid);
+
+        if(!$movie) {
+            return $this->json('400: Bad request', 400);
+        }
+
         $form = $this->createForm(MovieType::class, $movie);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
@@ -56,7 +64,13 @@ class MovieController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function delete(EntityManagerInterface $entityManager, Movie $movie) {
+    public function delete(EntityManagerInterface $entityManager, MovieRepository $movieRepository, string $uuid) {
+        $movie = $movieRepository->findByUuid($uuid);
+
+        if(!$movie) {
+            return $this->json('400: Bad request', 400);
+        }
+        
         $entityManager->remove($movie);
         $entityManager->flush();
 

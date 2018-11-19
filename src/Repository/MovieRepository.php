@@ -20,25 +20,10 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
-    private function setDataFromRequest(Request $request, Movie $movie): Movie {
-        $data = json_decode($request->getContent());
-
-        $movie->setTitle($data->title);
-        $movie->setGenre($data->genre);
-        $movie->setYear($data->year);
-
-        $this->_em->persist($movie);
-        $this->_em->flush();
-
-        return $movie;
-    }
-
-    public function createFromRequest(Request $request): Movie {
-        return $this->setDataFromRequest($request, new Movie());
-    }
-
-    public function updateFromRequest(Request $request, Movie $movie): Movie {
-        return $this->setDataFromRequest($request, $movie);
+    public function findByUuid($uuid) {
+        return $this->findOneBy([
+            'uuid' => $uuid
+        ]);
     }
 
     // /**

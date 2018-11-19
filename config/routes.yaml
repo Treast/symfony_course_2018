@@ -13,25 +13,19 @@ user_create:
   controller: App\Controller\UserController::create
 
 user_show:
-  path: /users/{id}
+  path: /users/{uuid}
   methods: [GET]
   controller: App\Controller\UserController::show
-  requirements:
-    user_id: '\d+'
 
 user_update:
-  path: /users/{id}
+  path: /users/{uuid}
   methods: [PUT, PATCH]
   controller: App\Controller\UserController::update
-  requirements:
-    user_id: '\d+'
 
 user_delete:
-  path: /users/{id}
+  path: /users/{uuid}
   methods: [DELETE]
   controller: App\Controller\UserController::delete
-  requirements:
-    user_id: '\d+'
 
 movie_list:
   path: /movies
@@ -44,22 +38,16 @@ movie_create:
   controller: App\Controller\MovieController::create
 
 movie_show:
-  path: /movies/{id}
+  path: /movies/{uuid}
   methods: [GET]
   controller: App\Controller\MovieController::show
-  requirements:
-    user_id: '\d+'
 
 movie_update:
-  path: /movies/{id}
+  path: /movies/{uuid}
   methods: [PUT, PATCH]
   controller: App\Controller\MovieController::update
-  requirements:
-    user_id: '\d+'
 
 movie_delete:
-  path: /movies/{id}
+  path: /movies/{uuid}
   methods: [DELETE]
   controller: App\Controller\MovieController::delete
-  requirements:
-    user_id: '\d+'

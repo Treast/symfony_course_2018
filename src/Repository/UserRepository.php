@@ -20,25 +20,10 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    private function setDataFromRequest(Request $request, User $user): User {
-        $data = json_decode($request->getContent());
-
-        $user->setUsername($data->username);
-        $user->setPassword($data->password);
-        $user->setEmail($data->email);
-
-        $this->_em->persist($user);
-        $this->_em->flush();
-
-        return $user;
-    }
-
-    public function createFromRequest(Request $request): User {
-        return $this->setDataFromRequest($request, new User());
-    }
-
-    public function updateFromRequest(Request $request, User $user): User {
-        return $this->setDataFromRequest($request,  $user);
+    public function findByUuid($uuid) {
+        return $this->findOneBy([
+            'uuid' => $uuid
+        ]);
     }
 
     // /**

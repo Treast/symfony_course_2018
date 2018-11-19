@@ -11,11 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string", length=255)
      */
-    private $id;
+    private $uuid;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -32,24 +32,12 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank
      * @Assert\NotNull
      * @Assert\Email
      */
     private $email;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Movie")
-     * @ORM\JoinTable(name="movie_list", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id")})
-     */
-    private $movies;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUsername(): ?string
     {
@@ -87,12 +75,14 @@ class User
         return $this;
     }
 
-    public function getMovies() {
-        return $this->movies;
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
     }
 
-    public function setMovies($movies): self {
-        $this->movies = $movies;
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
 
         return $this;
     }

@@ -33,7 +33,8 @@ class UserController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function show(User $user) {
+    public function show(UserRepository $userRepository, string $uuid) {
+        $user = $userRepository->findByUuid($uuid);
         if(!$user) {
             return $this->json('400: Bad request', 400);
         }
@@ -41,7 +42,13 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, User $user, ValidatorInterface $validator) {
+    public function update(EntityManagerInterface $entityManager, Request $request, UserRepository $userRepository, string $uuid, ValidatorInterface $validator) {
+        $user = $userRepository->findByUuid($uuid);
+
+        if(!$user) {
+            return $this->json('400: Bad request', 400);
+        }
+
         $form = $this->createForm(UserType::class, $user);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
@@ -56,7 +63,13 @@ class UserController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function delete(EntityManagerInterface $entityManager, User $user) {
+    public function delete(EntityManagerInterface $entityManager, UserRepository $userRepository, string $uuid) {
+        $user = $userRepository->findByUuid($uuid);
+
+        if(!$user) {
+            return $this->json('400: Bad request', 400);
+        }
+
         $entityManager->remove($user);
         $entityManager->flush();
 
