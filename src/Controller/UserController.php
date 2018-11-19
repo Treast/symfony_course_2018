@@ -17,8 +17,7 @@ class UserController extends AbstractController
     }
 
     public function create(UserRepository $userRepository, Request $request) {
-        $user = new User();
-        return $this->json($userRepository->updateFromRequest($request, $user));
+        return $this->json($userRepository->createFromRequest($request));
     }
 
     public function show(User $user) {

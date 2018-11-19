@@ -16,8 +16,7 @@ class MovieController extends AbstractController
     }
 
     public function create(MovieRepository $movieRepository, Request $request) {
-        $movie = new Movie();
-        return $this->json($movieRepository->updateFromRequest($request, $movie));
+        return $this->json($movieRepository->createFromRequest($request));
     }
 
     public function show(Movie $movie) {

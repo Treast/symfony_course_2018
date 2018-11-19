@@ -20,7 +20,7 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function updateFromRequest(Request $request, User $user) {
+    private function setDataFromRequest(Request $request, User $user): User {
         $data = json_decode($request->getContent());
 
         $user->setUsername($data->username);
@@ -31,6 +31,14 @@ class UserRepository extends ServiceEntityRepository
         $this->_em->flush();
 
         return $user;
+    }
+
+    public function createFromRequest(Request $request): User {
+        return $this->setDataFromRequest($request, new User());
+    }
+
+    public function updateFromRequest(Request $request, User $user): User {
+        return $this->setDataFromRequest($request,  $user);
     }
 
     // /**
