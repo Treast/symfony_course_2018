@@ -19,11 +19,6 @@ class Movie
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Movie;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $genre;
 
     /**
@@ -39,18 +34,6 @@ class Movie
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getMovie(): ?string
-    {
-        return $this->Movie;
-    }
-
-    public function setMovie(string $Movie): self
-    {
-        $this->Movie = $Movie;
-
-        return $this;
     }
 
     public function getGenre(): ?string
