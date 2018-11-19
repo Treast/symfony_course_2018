@@ -38,7 +38,8 @@ class User
 
     /**
      * @ORM\ManyToMany(targetEntity="Movie")
-     * @ORM\JoinTable(name="movie_list", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id")})
+     * @ORM\JoinTable(name="movie_list", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id")})
      */
     private $movies;
 

@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
@@ -16,13 +17,14 @@ class UserController extends AbstractController
         return $this->json($users);
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request) {
+    public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
+        $errors = $validator->validate($user);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->json($user);
@@ -39,12 +41,13 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, User $user) {
+    public function update(EntityManagerInterface $entityManager, Request $request, User $user, ValidatorInterface $validator) {
         $form = $this->createForm(UserType::class, $user);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
+        $errors = $validator->validate($user);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
             return $this->json($user);

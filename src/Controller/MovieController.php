@@ -8,6 +8,7 @@ use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MovieController extends AbstractController
 {
@@ -16,13 +17,14 @@ class MovieController extends AbstractController
         return $this->json($movies);
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request) {
+    public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
         $movie = new Movie();
         $form = $this->createForm(MovieType::class, $movie);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
+        $errors = $validator->validate($movie);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($movie);
             $entityManager->flush();
             return $this->json($movie);
@@ -39,12 +41,13 @@ class MovieController extends AbstractController
         return $this->json($movie);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie) {
+    public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie, ValidatorInterface $validator) {
         $form = $this->createForm(MovieType::class, $movie);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
+        $errors = $validator->validate($movie);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($movie);
             $entityManager->flush();
             return $this->json($movie);
