@@ -48,9 +48,9 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
-    public function delete(User $user) {
-        $this->getDoctrine()->getManager()->remove($user);
-        $this->getDoctrine()->getManager()->flush();
+    public function delete(EntityManagerInterface $entityManager, User $user) {
+        $entityManager->remove($user);
+        $entityManager->flush();
 
         return $this->json(['success' => true]);
     }

@@ -47,9 +47,9 @@ class MovieController extends AbstractController
         return $this->json($movie);
     }
 
-    public function delete(Movie $movie) {
-        $this->getDoctrine()->getManager()->remove($movie);
-        $this->getDoctrine()->getManager()->flush();
+    public function delete(EntityManagerInterface $entityManager, Movie $movie) {
+        $entityManager->remove($movie);
+        $entityManager->flush();
 
         return $this->json(['success' => true]);
     }
