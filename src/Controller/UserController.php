@@ -16,36 +16,17 @@ class UserController extends AbstractController
         return $this->json($movies);
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request) {
+    public function create(UserRepository $userRepository, Request $request) {
         $user = new User();
-
-        $data = json_decode($request->getContent());
-
-        $user->setUsername($data->username);
-        $user->setPassword($data->password);
-        $user->setEmail($data->email);
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return $this->json($user);
+        return $this->json($userRepository->updateFromRequest($request, $user));
     }
 
     public function show(User $user) {
         return $this->json($user);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, User $user) {
-        $data = json_decode($request->getContent());
-
-        $user->setUsername($data->username);
-        $user->setPassword($data->password);
-        $user->setEmail($data->email);
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return $this->json($user);
+    public function update(UserRepository $userRepository, Request $request, User $user) {
+        return $this->json($userRepository->updateFromRequest($request, $user));
     }
 
     public function delete(EntityManagerInterface $entityManager, User $user) {

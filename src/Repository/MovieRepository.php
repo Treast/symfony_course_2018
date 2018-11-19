@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Movie|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,19 @@ class MovieRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Movie::class);
+    }
+
+    public function updateFromRequest(Request $request, Movie $movie) {
+        $data = json_decode($request->getContent());
+
+        $movie->setTitle($data->title);
+        $movie->setGenre($data->genre);
+        $movie->setYear($data->year);
+
+        $this->_em->persist($movie);
+        $this->_em->flush();
+
+        return $movie;
     }
 
     // /**

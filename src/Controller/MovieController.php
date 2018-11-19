@@ -15,36 +15,17 @@ class MovieController extends AbstractController
         return $this->json($movies);
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request) {
+    public function create(MovieRepository $movieRepository, Request $request) {
         $movie = new Movie();
-
-        $data = json_decode($request->getContent());
-
-        $movie->setTitle($data->title);
-        $movie->setGenre($data->genre);
-        $movie->setYear($data->year);
-
-        $entityManager->persist($movie);
-        $entityManager->flush();
-
-        return $this->json($movie);
+        return $this->json($movieRepository->updateFromRequest($request, $movie));
     }
 
     public function show(Movie $movie) {
         return $this->json($movie);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie) {
-        $data = json_decode($request->getContent());
-
-        $movie->setTitle($data->title);
-        $movie->setGenre($data->genre);
-        $movie->setYear($data->year);
-
-        $entityManager->persist($movie);
-        $entityManager->flush();
-
-        return $this->json($movie);
+    public function update(Request $request, MovieRepository $movieRepository, Movie $movie) {
+        return $this->json($movieRepository->updateFromRequest($request, $movie));
     }
 
     public function delete(EntityManagerInterface $entityManager, Movie $movie) {
