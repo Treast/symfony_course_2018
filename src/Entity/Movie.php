@@ -44,6 +44,13 @@ class Movie
     private $image_url;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Actor", inversedBy="movies")
+     * @ORM\JoinTable(name="actors_movies", joinColumns={@ORM\JoinColumn(name="movie_uuid", referencedColumnName="uuid")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="actor_uuid", referencedColumnName="uuid")})
+     */
+    private $actors;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -118,5 +125,21 @@ class Movie
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActors()
+    {
+        return $this->actors;
+    }
+
+    /**
+     * @param mixed $actors
+     */
+    public function setActors($actors): void
+    {
+        $this->actors = $actors;
     }
 }

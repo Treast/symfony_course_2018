@@ -70,7 +70,7 @@ class MovieController extends AbstractController
         if(!$movie) {
             return $this->json('400: Bad request', 400);
         }
-        
+
         $entityManager->remove($movie);
         $entityManager->flush();
 
