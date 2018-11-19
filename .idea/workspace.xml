@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="615ffac3-37fa-4619-b1fc-7736a6de1d92" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/ActorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ActorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ActorController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,14 +44,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="26" />
-          <entry key="php" value="3511" />
+          <entry key="php" value="3516" />
           <entry key="yaml" value="370" />
           <entry key="yml" value="112" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="3511" />
+          <entry key="PHP" value="3516" />
           <entry key="PLAIN_TEXT" value="26" />
           <entry key="YAML" value="482" />
         </counts>
@@ -108,11 +108,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/ActorController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="21" column="60" lean-forward="true" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
-              <folding>
-                <element signature="e#34#54#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="84">
+              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -171,6 +168,7 @@
     <findStrings>
       <find>validation</find>
       <find>public function getMovies\(\) \{\n        return \$this\-\&gt;movies\;\n    \}\n\n    public function setMovies\(\$movies\)\: self \{\n        \$this\-\&gt;movies \= \$movies\;\n\n        return \$this\;\n    \}</find>
+      <find>user</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -432,12 +430,12 @@
       <option name="presentableId" value="Default" />
       <updated>1542616229762</updated>
       <workItem from="1542616230994" duration="244000" />
-      <workItem from="1542620046274" duration="14191000" />
+      <workItem from="1542620046274" duration="14307000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14435000" />
+    <option name="totallyTimeSpent" value="14551000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -648,11 +646,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/ActorController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="21" column="60" lean-forward="true" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
-          <folding>
-            <element signature="e#34#54#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="84">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>

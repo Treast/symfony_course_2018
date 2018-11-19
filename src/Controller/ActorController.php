@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Actor;
 use App\Form\ActorType;
 use App\Repository\ActorRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +18,7 @@ class ActorController extends AbstractController
     }
 
     public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
-        $actor = new User();
+        $actor = new Actor();
         $form = $this->createForm(ActorType::class, $actor);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
@@ -33,8 +33,8 @@ class ActorController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function show(ActorRepository $userRepository, string $uuid) {
-        $actor = $userRepository->findByUuid($uuid);
+    public function show(ActorRepository $actorRepository, string $uuid) {
+        $actor = $actorRepository->findByUuid($uuid);
         if(!$actor) {
             return $this->json('400: Bad request', 400);
         }
