@@ -31,6 +31,12 @@ class User
      */
     private $email;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Movie")
+     * @ORM\JoinTable(name="movie_list", joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id")})
+     */
+    private $movies;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,16 @@ class User
     {
         $this->email = $email;
 
+        return $this;
+    }
+
+    public function getMovies(): array {
+        return $this->movies;
+    }
+
+    public function setMovies($movies): self {
+        $this->movies = $movies;
+        
         return $this;
     }
 }
