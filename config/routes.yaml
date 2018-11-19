@@ -8,22 +8,50 @@ user_list:
   controller: App\Controller\UserController::index
 
 user_show:
-  path: /users/{user_id}
+  path: /users/{id}
   methods: [GET]
   controller: App\Controller\UserController::show
   requirements:
     user_id: '\d+'
 
 user_update:
-  path: /users/{user_id}
+  path: /users/{id}
   methods: [PUT, PATCH]
   controller: App\Controller\UserController::update
   requirements:
     user_id: '\d+'
 
 user_delete:
-  path: /users/{user_id}
+  path: /users/{id}
   methods: [DELETE]
   controller: App\Controller\UserController::delete
+  requirements:
+    user_id: '\d+'
+
+
+
+movie_list:
+  path: /movies
+  methods: [GET]
+  controller: App\Controller\MovieController::index
+
+movie_show:
+  path: /movies/{id}
+  methods: [GET]
+  controller: App\Controller\MovieController::show
+  requirements:
+    user_id: '\d+'
+
+movie_update:
+  path: /movies/{id}
+  methods: [PUT, PATCH]
+  controller: App\Controller\MovieController::update
+  requirements:
+    user_id: '\d+'
+
+movie_delete:
+  path: /movies/{id}
+  methods: [DELETE]
+  controller: App\Controller\MovieController::delete
   requirements:
     user_id: '\d+'
