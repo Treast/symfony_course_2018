@@ -28,12 +28,15 @@ user_delete:
   requirements:
     user_id: '\d+'
 
-
-
 movie_list:
   path: /movies
   methods: [GET]
   controller: App\Controller\MovieController::index
+
+movie_create:
+  path: /movies
+  methods: [POST]
+  controller: App\Controller\MovieController::create
 
 movie_show:
   path: /movies/{id}

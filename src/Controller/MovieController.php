@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class MovieController extends AbstractController
 {
@@ -13,11 +15,33 @@ class MovieController extends AbstractController
         return $this->json($movies);
     }
 
+    public function create(EntityManagerInterface $entityManager, Request $request, MovieRepository $movieRepository) {
+        $movie = new Movie();
+
+        $data = json_decode($request->getContent());
+
+        $movie->setTitle($data->title);
+        $movie->setGenre($data->genre);
+        $movie->setYear($data->year);
+
+        $entityManager->persist($movie);
+        $entityManager->flush();
+
+        return $this->json($movie);
+    }
+
     public function show(Movie $movie) {
         return $this->json($movie);
     }
 
-    public function update(MovieRepository $movieRepository, Movie $movie) {
+    public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie) {
+        $movie->setTitle($request->get('title'));
+        $movie->setGenre($request->get('genre'));
+        $movie->setYear($request->get('year'));
+
+        $entityManager->persist($movie);
+        $entityManager->flush();
+
         return $this->json($movie);
     }
 
