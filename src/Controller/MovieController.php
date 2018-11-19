@@ -15,7 +15,7 @@ class MovieController extends AbstractController
         return $this->json($movies);
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request, MovieRepository $movieRepository) {
+    public function create(EntityManagerInterface $entityManager, Request $request) {
         $movie = new Movie();
 
         $data = json_decode($request->getContent());

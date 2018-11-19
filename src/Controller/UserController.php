@@ -31,11 +31,20 @@ class UserController extends AbstractController
         return $this->json($user);
     }
 
-    public function show(UserRepository $userRepository, User $user) {
+    public function show(User $user) {
         return $this->json($user);
     }
 
-    public function update(UserRepository $userRepository, User $user) {
+    public function update(EntityManagerInterface $entityManager, Request $request, User $user) {
+        $data = json_decode($request->getContent());
+
+        $user->setUsername($data->username);
+        $user->setPassword($data->password);
+        $user->setEmail($data->email);
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
         return $this->json($user);
     }
 
