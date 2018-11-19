@@ -35,9 +35,11 @@ class MovieController extends AbstractController
     }
 
     public function update(EntityManagerInterface $entityManager, Request $request, Movie $movie) {
-        $movie->setTitle($request->get('title'));
-        $movie->setGenre($request->get('genre'));
-        $movie->setYear($request->get('year'));
+        $data = json_decode($request->getContent());
+
+        $movie->setTitle($data->title);
+        $movie->setGenre($data->genre);
+        $movie->setYear($data->year);
 
         $entityManager->persist($movie);
         $entityManager->flush();
