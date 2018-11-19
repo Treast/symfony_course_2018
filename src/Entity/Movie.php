@@ -20,19 +20,21 @@ class Movie
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $genre;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
-     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $year;
 

@@ -20,18 +20,21 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Assert\NotNull
      * @Assert\Email
      */
     private $email;
