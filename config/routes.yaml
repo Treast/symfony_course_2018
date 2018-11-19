@@ -1,0 +1,25 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+user_list:
+  path: /users
+  controller: App\Controller\UserController::list
+
+user_show:
+  path: /users/{user_id}
+  controller: App\Controller\UserController::show
+  requirements:
+    user_id: '\d+'
+
+user_update:
+  path: /users/{user_id}
+  controller: App\Controller\UserController::update
+  requirements:
+    user_id: '\d+'
+
+user_delete:
+  path: /users/{user_id}
+  controller: App\Controller\UserController::delete
+  requirements:
+    user_id: '\d+'
