@@ -4,22 +4,26 @@
 
 user_list:
   path: /users
-  controller: App\Controller\UserController::list
+  methods: [GET]
+  controller: App\Controller\UserController::index
 
 user_show:
   path: /users/{user_id}
+  methods: [GET]
   controller: App\Controller\UserController::show
   requirements:
     user_id: '\d+'
 
 user_update:
   path: /users/{user_id}
+  methods: [PUT, PATCH]
   controller: App\Controller\UserController::update
   requirements:
     user_id: '\d+'
 
 user_delete:
   path: /users/{user_id}
+  methods: [DELETE]
   controller: App\Controller\UserController::delete
   requirements:
     user_id: '\d+'
