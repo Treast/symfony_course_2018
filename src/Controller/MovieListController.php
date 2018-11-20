@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Movie;
 use App\Entity\MovieList;
 use App\Form\MovieListType;
 use App\Repository\MovieListRepository;
-use App\Repository\MovieRepository;
+use App\Repository\UserRepository;
 use App\Traits\JsonSerializerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +21,10 @@ class MovieListController extends AbstractController
         return $this->serializeData($movies);
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
+    public function create(EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request, ValidatorInterface $validator, string $user_uuid) {
         $movieList = new MovieList();
+        $user = $userRepository->findByUuid($user_uuid);
+        $movieList->setUserUuid($user);
         $form = $this->createForm(MovieListType::class, $movieList);
         $data = json_decode($request->getContent(), true);
         $form->submit($data);
@@ -38,8 +39,8 @@ class MovieListController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function show(MovieListRepository $movieListRepository, string $uuid) {
-        $movieList = $movieListRepository->findByUuid($uuid);
+    public function show(MovieListRepository $movieListRepository, string $list_uuid) {
+        $movieList = $movieListRepository->findByUuid($list_uuid);
 
         if(!$movieList) {
             return $this->json('404: Resource not found', 404);
@@ -48,8 +49,8 @@ class MovieListController extends AbstractController
         return $this->serializeData($movieList);
     }
 
-    public function update(EntityManagerInterface $entityManager, Request $request, MovieListRepository $movieListRepository, string $uuid, ValidatorInterface $validator) {
-        $movieList = $movieListRepository->findByUuid($uuid);
+    public function update(EntityManagerInterface $entityManager, Request $request, MovieListRepository $movieListRepository, string $list_uuid, ValidatorInterface $validator) {
+        $movieList = $movieListRepository->findByUuid($list_uuid);
 
         if(!$movieList) {
             return $this->json('404: Resource not found', 404);
@@ -69,8 +70,8 @@ class MovieListController extends AbstractController
         return $this->json('400: Bad request', 400);
     }
 
-    public function delete(EntityManagerInterface $entityManager, MovieListRepository $movieListRepository, string $uuid) {
-        $movieList = $movieListRepository->findByUuid($uuid);
+    public function delete(EntityManagerInterface $entityManager, MovieListRepository $movieListRepository, string $list_uuid) {
+        $movieList = $movieListRepository->findByUuid($list_uuid);
 
         if(!$movieList) {
             return $this->json('404: Resource not found', 404);
