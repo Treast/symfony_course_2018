@@ -30,6 +30,12 @@ class PlaylistController extends FOSRestController
 
     private $serializer;
 
+    /**
+     * PlaylistController constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param PlaylistRepository $playlistRepository
+     * @param MovieRepository $movieRepository
+     */
     public function __construct(EntityManagerInterface $entityManager, PlaylistRepository $playlistRepository, MovieRepository $movieRepository)
     {
         $this->entityManager = $entityManager;
@@ -108,6 +114,29 @@ class PlaylistController extends FOSRestController
         return new Response($this->serializer->serialize($playlist, 'json'));
     }
 
+    /**
+     * @param User $user
+     * @param Playlist $playlist
+     * @param Movie $movie
+     * @return JsonResponse|Response
+     */
+    public function deletePlaylistsMoviesAction(User $user, Playlist $playlist, Movie $movie) {
+        if (!$movie) {
+            return $this->json('400: Bad request', 400);
+        }
+
+        $playlist->removeMovie($movie);
+
+        $this->entityManager->persist($playlist);
+        $this->entityManager->flush();
+        return new Response($this->serializer->serialize($playlist, 'json'));
+    }
+
+    /**
+     * @param User $user
+     * @param Playlist $playlist
+     * @return JsonResponse
+     */
     public function deletePlaylistAction(User $user, Playlist $playlist) {
         if(!$playlist) {
             return $this->json('400: Bad request', 400);
