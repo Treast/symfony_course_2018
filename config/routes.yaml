@@ -2,30 +2,9 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-user_list:
-  path: /users
-  methods: [GET]
-  controller: App\Controller\UserController::index
-
-user_create:
-  path: /users
-  methods: [POST]
-  controller: App\Controller\UserController::create
-
-user_show:
-  path: /users/{uuid}
-  methods: [GET]
-  controller: App\Controller\UserController::show
-
-user_update:
-  path: /users/{uuid}
-  methods: [PUT, PATCH]
-  controller: App\Controller\UserController::update
-
-user_delete:
-  path: /users/{uuid}
-  methods: [DELETE]
-  controller: App\Controller\UserController::delete
+users:
+  type: rest
+  resource: App\Controller\UserController
 
 movie_list_list:
   path: /users/{user_uuid}/lists
