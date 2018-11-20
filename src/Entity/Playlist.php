@@ -85,6 +85,10 @@ class Playlist
 
     public function addMovie(Movie $movie): self
     {
+        if(!$this->movies) {
+            $this->movies = new ArrayCollection();
+        }
+
         if (!$this->movies->contains($movie)) {
             $this->movies[] = $movie;
         }
@@ -94,6 +98,10 @@ class Playlist
 
     public function removeMovie(Movie $movie): self
     {
+        if(!$this->movies) {
+            $this->movies = new ArrayCollection();
+        }
+
         if ($this->movies->contains($movie)) {
             $this->movies->removeElement($movie);
         }

@@ -35,6 +35,7 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @JMS\Expose
      */
     private $password;
 
@@ -48,7 +49,7 @@ class User
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Playlist", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Playlist", mappedBy="user", cascade={"remove"})
      * @JMS\Expose
      */
     private $playlists;
@@ -116,6 +117,10 @@ class User
 
     public function addPlaylist(Playlist $playlist): self
     {
+        if(!$this->playlists) {
+           $this->playlists = new ArrayCollection();
+        }
+
         if (!$this->playlists->contains($playlist)) {
             $this->playlists[] = $playlist;
             $playlist->setUser($this);
@@ -126,6 +131,10 @@ class User
 
     public function removePlaylist(Playlist $playlist): self
     {
+        if(!$this->playlists) {
+            $this->playlists = new ArrayCollection();
+        }
+
         if ($this->playlists->contains($playlist)) {
             $this->playlists->removeElement($playlist);
             // set the owning side to null (unless already changed)

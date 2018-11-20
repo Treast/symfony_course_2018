@@ -40,16 +40,16 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @ParamConverter("user", converter="fos_rest.request_body")
+     * @ParamConverter("user", converter="fos_rest.request_body", options={"mapping": {"comment_slug": "slug"}})
      * @param User $user
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      */
     public function postUsersAction(User $user, ConstraintViolationListInterface $validationErrors) {
-        dd($user->getPassword());
         if (count($validationErrors) > 0) {
             return $this->json('400: Bad request', 400);
         }
+
         $playlistPrefer = new Playlist();
         $playlistPrefer->setName('Mes préférés');
 
