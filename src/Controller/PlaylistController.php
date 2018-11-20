@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
 use App\Entity\Playlist;
 use App\Entity\User;
+use App\Repository\MovieRepository;
 use App\Repository\PlaylistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -22,12 +25,16 @@ class PlaylistController extends FOSRestController
     /** @var PlaylistRepository  */
     private $playlistRepository;
 
+    /** @var MovieRepository  */
+    private $movieRepository;
+
     private $serializer;
 
-    public function __construct(EntityManagerInterface $entityManager, PlaylistRepository $playlistRepository)
+    public function __construct(EntityManagerInterface $entityManager, PlaylistRepository $playlistRepository, MovieRepository $movieRepository)
     {
         $this->entityManager = $entityManager;
         $this->playlistRepository = $playlistRepository;
+        $this->movieRepository = $movieRepository;
         $this->serializer = SerializerBuilder::create()->build();
     }
 
@@ -76,6 +83,25 @@ class PlaylistController extends FOSRestController
         }
 
         $playlist->setName($newPlaylist->getName());
+
+        $this->entityManager->persist($playlist);
+        $this->entityManager->flush();
+        return new Response($this->serializer->serialize($playlist, 'json'));
+    }
+
+    /**
+     * @param User $user
+     * @param Playlist $playlist
+     * @param Request $request
+     * @return JsonResponse|Response
+     */
+    public function postPlaylistsMoviesAction(User $user, Playlist $playlist, Request $request) {
+        $movie = $this->movieRepository->findByUuid($request->get('movie'));
+        if (!$movie) {
+            return $this->json('400: Bad request', 400);
+        }
+
+        $playlist->addMovie($movie);
 
         $this->entityManager->persist($playlist);
         $this->entityManager->flush();
