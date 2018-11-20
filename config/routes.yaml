@@ -30,27 +30,27 @@ user_delete:
 movie_list_list:
   path: /users/{user_uuid}/lists
   methods: [GET]
-  controller: App\Controller\UserController::index
+  controller: App\Controller\MovieListController::index
 
 movie_list_create:
   path: /users/{user_uuid}/lists
   methods: [POST]
-  controller: App\Controller\UserController::create
+  controller: App\Controller\MovieListController::create
 
 movie_list_show:
   path: /users/{user_uuid}/lists/{list_uuid}
   methods: [GET]
-  controller: App\Controller\UserController::show
+  controller: App\Controller\MovieListController::show
 
 movie_list_update:
   path: /users/{user_uuid}/lists/{list_uuid}
   methods: [PUT, PATCH]
-  controller: App\Controller\UserController::update
+  controller: App\Controller\MovieListController::update
 
 movie_list_delete:
   path: /users/{user_uuid}/lists/{list_uuid}
   methods: [DELETE]
-  controller: App\Controller\UserController::delete
+  controller: App\Controller\MovieListController::delete
 
 movie_list:
   path: /movies
