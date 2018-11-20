@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Swagger\Annotations as SWG;
 
 class UserController extends FOSRestController
 {
@@ -22,6 +23,7 @@ class UserController extends FOSRestController
     /** @var UserRepository  */
     private $userRepository;
 
+    /** @var \JMS\Serializer\Serializer */
     private $serializer;
 
     public function __construct(EntityManagerInterface $entityManager, UserRepository $userRepository)
@@ -31,10 +33,27 @@ class UserController extends FOSRestController
         $this->serializer = SerializerBuilder::create()->build();
     }
 
+    /**
+     * @return Response
+     * @SWG\Tag(name="User")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return all users."
+     * )
+     */
     public function getUsersAction() {
         return new Response($this->serializer->serialize($this->userRepository->findAll(), 'json'));
     }
 
+    /**
+     * @param User $user
+     * @return Response
+     * @SWG\Tag(name="User")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return a specific user."
+     * )
+     */
     public function getUserAction(User $user) {
         return new Response($this->serializer->serialize($user, 'json'));
     }
@@ -44,6 +63,11 @@ class UserController extends FOSRestController
      * @param User $user
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
+     * @SWG\Tag(name="User")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Create an user."
+     * )
      */
     public function postUsersAction(User $user, ConstraintViolationListInterface $validationErrors) {
         if (count($validationErrors) > 0) {
@@ -72,6 +96,11 @@ class UserController extends FOSRestController
      * @param User $newUser
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
+     * @SWG\Tag(name="User")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Update an user."
+     * )
      */
     public function putUserAction(User $user, User $newUser, ConstraintViolationListInterface $validationErrors) {
         if (count($validationErrors) > 0) {
@@ -87,6 +116,15 @@ class UserController extends FOSRestController
         return new Response($this->serializer->serialize($user, 'json'));
     }
 
+    /**
+     * @param User $user
+     * @return JsonResponse
+     * @SWG\Tag(name="User")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete the user."
+     * )
+     */
     public function deleteUserAction(User $user) {
         if(!$user) {
             return $this->json('400: Bad request', 400);

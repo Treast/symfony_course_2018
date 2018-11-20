@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Swagger\Annotations as SWG;
 
 class MovieController extends FOSRestController
 {
@@ -20,8 +21,14 @@ class MovieController extends FOSRestController
     /** @var MovieRepository  */
     private $movieRepository;
 
+    /** @var \JMS\Serializer\Serializer  */
     private $serializer;
 
+    /**
+     * MovieController constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param MovieRepository $movieRepository
+     */
     public function __construct(EntityManagerInterface $entityManager, MovieRepository $movieRepository)
     {
         $this->entityManager = $entityManager;
@@ -29,10 +36,27 @@ class MovieController extends FOSRestController
         $this->serializer = SerializerBuilder::create()->build();
     }
 
+    /**
+     * @return Response
+     * @SWG\Tag(name="Movie")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return all the movies."
+     * )
+     */
     public function getMoviesAction() {
         return new Response($this->serializer->serialize($this->movieRepository->findAll(), 'json'));
     }
 
+    /**
+     * @param Movie $movie
+     * @return Response
+     * @SWG\Tag(name="Movie")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return a specific movie."
+     * )
+     */
     public function getMovieAction(Movie $movie) {
         return new Response($this->serializer->serialize($movie, 'json'));
     }
@@ -42,6 +66,11 @@ class MovieController extends FOSRestController
      * @param Movie $movie
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
+     * @SWG\Tag(name="Movie")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Create and return a movie."
+     * )
      */
     public function postMoviesAction(Movie $movie, ConstraintViolationListInterface $validationErrors) {
         if (count($validationErrors) > 0) {
@@ -59,6 +88,11 @@ class MovieController extends FOSRestController
      * @param Movie $newMovie
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
+     * @SWG\Tag(name="Movie")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Update a movie."
+     * )
      */
     public function putMovieAction(Movie $movie, Movie $newMovie, ConstraintViolationListInterface $validationErrors) {
         if (count($validationErrors) > 0) {
@@ -76,6 +110,15 @@ class MovieController extends FOSRestController
         return new Response($this->serializer->serialize($movie, 'json'));
     }
 
+    /**
+     * @param Movie $movie
+     * @return JsonResponse
+     * @SWG\Tag(name="Movie")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete a movie."
+     * )
+     */
     public function deleteMovieAction(Movie $movie) {
         if(!$movie) {
             return $this->json('400: Bad request', 400);

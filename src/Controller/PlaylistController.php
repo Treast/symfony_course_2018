@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Swagger\Annotations as SWG;
 
 class PlaylistController extends FOSRestController
 {
@@ -47,11 +48,26 @@ class PlaylistController extends FOSRestController
     /**
      * @param User $user
      * @return Response
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return all playlists of an user."
+     * )
      */
     public function getPlaylistsAction(User $user) {
         return new Response($this->serializer->serialize($user->getPlaylists(), 'json'));
     }
 
+    /**
+     * @param User $user
+     * @param Playlist $playlist
+     * @return Response
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return a specific playlist of an user."
+     * )
+     */
     public function getPlaylistAction(User $user, Playlist $playlist) {
         return new Response($this->serializer->serialize($playlist, 'json'));
     }
@@ -62,6 +78,11 @@ class PlaylistController extends FOSRestController
      * @param Playlist $playlist
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Create and return a playlist to an user."
+     * )
      */
     public function postPlaylistsAction(User $user, Playlist $playlist, ConstraintViolationListInterface $validationErrors) {
         if (count($validationErrors) > 0) {
@@ -82,6 +103,11 @@ class PlaylistController extends FOSRestController
      * @param Playlist $newPlaylist
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Update the playlist of an user."
+     * )
      */
     public function putPlaylistAction(User $user, Playlist $playlist, Playlist $newPlaylist, ConstraintViolationListInterface $validationErrors) {
         if (count($validationErrors) > 0) {
@@ -100,6 +126,11 @@ class PlaylistController extends FOSRestController
      * @param Playlist $playlist
      * @param Request $request
      * @return JsonResponse|Response
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Add a movie to a playlist of an user."
+     * )
      */
     public function postPlaylistsMoviesAction(User $user, Playlist $playlist, Request $request) {
         $movie = $this->movieRepository->findByUuid($request->get('movie'));
@@ -119,6 +150,11 @@ class PlaylistController extends FOSRestController
      * @param Playlist $playlist
      * @param Movie $movie
      * @return JsonResponse|Response
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete a specific movie of a playlist of an user."
+     * )
      */
     public function deletePlaylistsMoviesAction(User $user, Playlist $playlist, Movie $movie) {
         if (!$movie) {
@@ -136,6 +172,11 @@ class PlaylistController extends FOSRestController
      * @param User $user
      * @param Playlist $playlist
      * @return JsonResponse
+     * @SWG\Tag(name="Playlist")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete a playlist of an user."
+     * )
      */
     public function deletePlaylistAction(User $user, Playlist $playlist) {
         if(!$playlist) {
