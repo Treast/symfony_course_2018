@@ -3,80 +3,87 @@
 namespace App\Controller;
 
 use App\Entity\Movie;
-use App\Form\MovieType;
 use App\Repository\MovieRepository;
-use App\Traits\JsonSerializerTrait;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use FOS\RestBundle\Controller\FOSRestController;
+use JMS\Serializer\SerializerBuilder;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class MovieController extends AbstractController
+class MovieController extends FOSRestController
 {
-    use JsonSerializerTrait;
+    /** @var EntityManagerInterface  */
+    private $entityManager;
 
-    public function index(MovieRepository $movieRepository) {
-        $movies = $movieRepository->findAll();
-        return $this->serializeData($movies);
+    /** @var MovieRepository  */
+    private $movieRepository;
+
+    private $serializer;
+
+    public function __construct(EntityManagerInterface $entityManager, MovieRepository $movieRepository)
+    {
+        $this->entityManager = $entityManager;
+        $this->movieRepository = $movieRepository;
+        $this->serializer = SerializerBuilder::create()->build();
     }
 
-    public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
-        $movie = new Movie();
-        $form = $this->createForm(MovieType::class, $movie);
-        $data = json_decode($request->getContent(), true);
-        $form->submit($data);
-        $errors = $validator->validate($movie);
+    public function getMoviesAction() {
+        return new Response($this->serializer->serialize($this->movieRepository->findAll(), 'json'));
+    }
 
-        if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($movie);
-            $entityManager->flush();
-            return $this->serializeData($movie);
+    public function getMovieAction(Movie $movie) {
+        return new Response($this->serializer->serialize($movie, 'json'));
+    }
+
+    /**
+     * @ParamConverter("movie", converter="fos_rest.request_body")
+     * @param Movie $movie
+     * @param ConstraintViolationListInterface $validationErrors
+     * @return Response
+     */
+    public function postMoviesAction(Movie $movie, ConstraintViolationListInterface $validationErrors) {
+        if (count($validationErrors) > 0) {
+            return $this->json('400: Bad request', 400);
         }
 
-        return $this->json('400: Bad request', 400);
+        $this->entityManager->persist($movie);
+        $this->entityManager->flush();
+        return new Response($this->serializer->serialize($movie, 'json'));
     }
 
-    public function show(MovieRepository $movieRepository, string $uuid) {
-        $movie = $movieRepository->findByUuid($uuid);
+    /**
+     * @ParamConverter("newMovie", converter="fos_rest.request_body")
+     * @param Movie $movie
+     * @param Movie $newMovie
+     * @param ConstraintViolationListInterface $validationErrors
+     * @return Response
+     */
+    public function putMovieAction(Movie $movie, Movie $newMovie, ConstraintViolationListInterface $validationErrors) {
+        if (count($validationErrors) > 0) {
+            return $this->json('400: Bad request', 400);
+        }
 
+        $movie->setTitle($newMovie->getTitle());
+        $movie->setDescription($newMovie->getDescription());
+        $movie->setGenre($newMovie->getGenre());
+        $movie->setImageUrl($newMovie->getImageUrl());
+        $movie->setYear($newMovie->getYear());
+
+        $this->entityManager->persist($movie);
+        $this->entityManager->flush();
+        return new Response($this->serializer->serialize($movie, 'json'));
+    }
+
+    public function deleteMovieAction(Movie $movie) {
         if(!$movie) {
-            return $this->json('404: Resource not found', 404);
+            return $this->json('400: Bad request', 400);
         }
 
-        return $this->serializeData($movie);
-    }
+        $this->entityManager->remove($movie);
+        $this->entityManager->flush();
 
-    public function update(EntityManagerInterface $entityManager, Request $request, MovieRepository $movieRepository, string $uuid, ValidatorInterface $validator) {
-        $movie = $movieRepository->findByUuid($uuid);
-
-        if(!$movie) {
-            return $this->json('404: Resource not found', 404);
-        }
-
-        $form = $this->createForm(MovieType::class, $movie);
-        $data = json_decode($request->getContent(), true);
-        $form->submit($data);
-        $errors = $validator->validate($movie);
-
-        if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($movie);
-            $entityManager->flush();
-            return $this->serializeData($movie);
-        }
-
-        return $this->json('400: Bad request', 400);
-    }
-
-    public function delete(EntityManagerInterface $entityManager, MovieRepository $movieRepository, string $uuid) {
-        $movie = $movieRepository->findByUuid($uuid);
-
-        if(!$movie) {
-            return $this->json('404: Resource not found', 404);
-        }
-
-        $entityManager->remove($movie);
-        $entityManager->flush();
-
-        return $this->json(['success' => true]);
+        return new JsonResponse(['success' => true]);
     }
 }

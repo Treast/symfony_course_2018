@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\MovieList;
+use App\Entity\Playlist;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Traits\JsonSerializerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializerBuilder;
@@ -13,11 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use FOS\RestBundle\Controller\Annotations;
 
 class UserController extends FOSRestController
 {
-    use JsonSerializerTrait;
 
     /** @var EntityManagerInterface  */
     private $entityManager;
@@ -53,9 +50,25 @@ class UserController extends FOSRestController
             return $this->json('400: Bad request', 400);
         }
 
-        $this->entityManager->persist($user);
+        $newUser = new User();
+        $newUser->setUsername($user->getUsername());
+        $newUser->setPassword($user->getPassword());
+        $newUser->setEmail($user->getEmail());
+
+        $playlistPrefer = new Playlist();
+        $playlistPrefer->setName('Mes préférés');
+
+        $playlistToSee = new Playlist();
+        $playlistToSee->setName('À voir');
+
+        $newUser->addPlaylist($playlistPrefer);
+        $newUser->addPlaylist($playlistToSee);
+
+        $this->entityManager->persist($newUser);
+        $this->entityManager->persist($playlistPrefer);
+        $this->entityManager->persist($playlistToSee);
         $this->entityManager->flush();
-        return new Response($this->serializer->serialize($user, 'json'));
+        return new Response($this->serializer->serialize($newUser, 'json'));
     }
 
     /**

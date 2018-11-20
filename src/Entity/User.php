@@ -35,6 +35,7 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @JMS\Expose
      */
     private $password;
 
@@ -48,14 +49,14 @@ class User
     private $email;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MovieList", orphanRemoval=true, mappedBy="user_uuid")
+     * @ORM\OneToMany(targetEntity="App\Entity\Playlist", mappedBy="user")
      * @JMS\Expose
      */
-    private $movies_lists;
+    private $playlists;
 
     public function __construct()
     {
-        $this->movies_lists = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
     }
 
     public function getUsername(): ?string
@@ -107,30 +108,30 @@ class User
     }
 
     /**
-     * @return Collection|MovieList[]
+     * @return Collection|Playlist[]
      */
-    public function getMoviesLists(): Collection
+    public function getPlaylists(): Collection
     {
-        return $this->movies_lists;
+        return $this->playlists;
     }
 
-    public function addMoviesList(MovieList $moviesList): self
+    public function addPlaylist(Playlist $playlist): self
     {
-        if (!$this->movies_lists->contains($moviesList)) {
-            $this->movies_lists[] = $moviesList;
-            $moviesList->setUserUuid($this);
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists[] = $playlist;
+            $playlist->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeMoviesList(MovieList $moviesList): self
+    public function removePlaylist(Playlist $playlist): self
     {
-        if ($this->movies_lists->contains($moviesList)) {
-            $this->movies_lists->removeElement($moviesList);
+        if ($this->playlists->contains($playlist)) {
+            $this->playlists->removeElement($playlist);
             // set the owning side to null (unless already changed)
-            if ($moviesList->getUserUuid() === $this) {
-                $moviesList->setUserUuid(null);
+            if ($playlist->getUser() === $this) {
+                $playlist->setUser(null);
             }
         }
 
