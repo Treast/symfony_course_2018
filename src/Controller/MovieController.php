@@ -7,6 +7,7 @@ use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializerBuilder;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +42,11 @@ class MovieController extends FOSRestController
      * @SWG\Tag(name="Movie")
      * @SWG\Response(
      *     response=200,
-     *     description="Return all the movies."
+     *     description="Return all the movies.",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Movie::class))
+     *     )
      * )
      */
     public function getMoviesAction() {
@@ -52,9 +57,11 @@ class MovieController extends FOSRestController
      * @param Movie $movie
      * @return Response
      * @SWG\Tag(name="Movie")
+     * @SWG\Parameter(name="movie", type="string", in="path", description="Movie UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Return a specific movie."
+     *     description="Return a specific movie.",
+     *     @Model(type=Movie::class)
      * )
      */
     public function getMovieAction(Movie $movie) {
@@ -67,9 +74,11 @@ class MovieController extends FOSRestController
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      * @SWG\Tag(name="Movie")
+     * @SWG\Parameter(name="movie", type="string", in="path", description="Movie UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Create and return a movie."
+     *     description="Create and return a movie.",
+     *     @Model(type=Movie::class)
      * )
      */
     public function postMoviesAction(Movie $movie, ConstraintViolationListInterface $validationErrors) {
@@ -89,9 +98,11 @@ class MovieController extends FOSRestController
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      * @SWG\Tag(name="Movie")
+     * @SWG\Parameter(name="movie", type="string", in="path", description="Movie UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Update a movie."
+     *     description="Update a movie.",
+     *     @Model(type=Movie::class)
      * )
      */
     public function putMovieAction(Movie $movie, Movie $newMovie, ConstraintViolationListInterface $validationErrors) {
@@ -114,9 +125,14 @@ class MovieController extends FOSRestController
      * @param Movie $movie
      * @return JsonResponse
      * @SWG\Tag(name="Movie")
+     * @SWG\Parameter(name="movie", type="string", in="path", description="Movie UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Delete a movie."
+     *     description="Delete a movie.",
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Property(property="success", type="boolean")
+     *     )
      * )
      */
     public function deleteMovieAction(Movie $movie) {

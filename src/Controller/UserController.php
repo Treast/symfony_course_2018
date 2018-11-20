@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\FOSRestController;
 use JMS\Serializer\SerializerBuilder;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +39,11 @@ class UserController extends FOSRestController
      * @SWG\Tag(name="User")
      * @SWG\Response(
      *     response=200,
-     *     description="Return all users."
+     *     description="Return all users.",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=User::class))
+     *     )
      * )
      */
     public function getUsersAction() {
@@ -49,9 +54,11 @@ class UserController extends FOSRestController
      * @param User $user
      * @return Response
      * @SWG\Tag(name="User")
+     * @SWG\Parameter(name="user", type="string", in="path", description="User UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Return a specific user."
+     *     description="Return a specific user.",
+     *     @Model(type=User::class)
      * )
      */
     public function getUserAction(User $user) {
@@ -64,9 +71,11 @@ class UserController extends FOSRestController
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      * @SWG\Tag(name="User")
+     * @SWG\Parameter(name="user", type="string", in="path", description="User UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Create an user."
+     *     description="Create an user.",
+     *     @Model(type=User::class)
      * )
      */
     public function postUsersAction(User $user, ConstraintViolationListInterface $validationErrors) {
@@ -97,9 +106,11 @@ class UserController extends FOSRestController
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      * @SWG\Tag(name="User")
+     * @SWG\Parameter(name="user", type="string", in="path", description="User UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Update an user."
+     *     description="Update an user.",
+     *     @Model(type=User::class)
      * )
      */
     public function putUserAction(User $user, User $newUser, ConstraintViolationListInterface $validationErrors) {
@@ -120,14 +131,19 @@ class UserController extends FOSRestController
      * @param User $user
      * @return JsonResponse
      * @SWG\Tag(name="User")
+     * @SWG\Parameter(name="user", type="string", in="path", description="User UUID")
      * @SWG\Response(
      *     response=200,
-     *     description="Delete the user."
+     *     description="Delete the user.",
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Property(property="success", type="boolean")
+     *     )
      * )
      */
     public function deleteUserAction(User $user) {
         if(!$user) {
-            return $this->json('400: Bad request', 400);
+            return $this->json('400: Bad request', JsonResponse::HTTP_BAD_REQUEST);
         }
 
         $this->entityManager->remove($user);
