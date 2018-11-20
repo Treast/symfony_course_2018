@@ -6,16 +6,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
+
 
 /**
+ * @JMS\ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements \JsonSerializable
+class User
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $uuid;
 
@@ -23,6 +27,7 @@ class User implements \JsonSerializable
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @JMS\Expose
      */
     private $username;
 
@@ -38,11 +43,13 @@ class User implements \JsonSerializable
      * @Assert\NotBlank
      * @Assert\NotNull
      * @Assert\Email
+     * @JMS\Expose
      */
     private $email;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MovieList", orphanRemoval=true, mappedBy="user_uuid")
+     * @JMS\Expose
      */
     private $movies_lists;
 
@@ -128,23 +135,5 @@ class User implements \JsonSerializable
         }
 
         return $this;
-    }
-
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'uuid' => $this->getUuid(),
-            'username' => $this->getUsername(),
-            'email' => $this->getEmail(),
-            'movies_lists' => $this->getMoviesLists(),
-        ];
     }
 }
