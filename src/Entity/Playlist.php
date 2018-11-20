@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlaylistRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Playlist
 {
@@ -15,11 +17,13 @@ class Playlist
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string")
+     * @JMS\Expose
      */
     private $uuid;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     private $name;
 
@@ -33,6 +37,7 @@ class Playlist
      * @ORM\ManyToMany(targetEntity="App\Entity\Movie", inversedBy="playlists")
      * @ORM\JoinTable(name="movies_playlists", joinColumns={@ORM\JoinColumn(name="playlist_uuid", referencedColumnName="uuid")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="movie_uuid", referencedColumnName="uuid")})
+     * @JMS\Expose
      */
     private $movies;
 

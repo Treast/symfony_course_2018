@@ -46,29 +46,24 @@ class UserController extends FOSRestController
      * @return Response
      */
     public function postUsersAction(User $user, ConstraintViolationListInterface $validationErrors) {
+        dd($user->getPassword());
         if (count($validationErrors) > 0) {
             return $this->json('400: Bad request', 400);
         }
-
-        $newUser = new User();
-        $newUser->setUsername($user->getUsername());
-        $newUser->setPassword($user->getPassword());
-        $newUser->setEmail($user->getEmail());
-
         $playlistPrefer = new Playlist();
         $playlistPrefer->setName('Mes préférés');
 
         $playlistToSee = new Playlist();
         $playlistToSee->setName('À voir');
 
-        $newUser->addPlaylist($playlistPrefer);
-        $newUser->addPlaylist($playlistToSee);
+        $user->addPlaylist($playlistPrefer);
+        $user->addPlaylist($playlistToSee);
 
-        $this->entityManager->persist($newUser);
+        $this->entityManager->persist($user);
         $this->entityManager->persist($playlistPrefer);
         $this->entityManager->persist($playlistToSee);
         $this->entityManager->flush();
-        return new Response($this->serializer->serialize($newUser, 'json'));
+        return new Response($this->serializer->serialize($user, 'json'));
     }
 
     /**

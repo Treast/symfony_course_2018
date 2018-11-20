@@ -1,0 +1,12 @@
+users:
+  type: rest
+  resource: App\Controller\UserController
+
+playlists:
+  type: rest
+  parent: users
+  resource: App\Controller\PlaylistController
+
+movies:
+  type: rest
+  resource: App\Controller\MovieController
