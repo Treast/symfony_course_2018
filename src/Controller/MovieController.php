@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
+use App\Traits\JsonSerializerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +13,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MovieController extends AbstractController
 {
+    use JsonSerializerTrait;
+
     public function index(MovieRepository $movieRepository) {
         $movies = $movieRepository->findAll();
-        return $this->json($movies);
+        return $this->serializeData($movies);
     }
 
     public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
@@ -27,7 +30,7 @@ class MovieController extends AbstractController
         if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($movie);
             $entityManager->flush();
-            return $this->json($movie);
+            return $this->serializeData($movie);
         }
 
         return $this->json('400: Bad request', 400);
@@ -37,17 +40,17 @@ class MovieController extends AbstractController
         $movie = $movieRepository->findByUuid($uuid);
 
         if(!$movie) {
-            return $this->json('400: Bad request', 400);
+            return $this->json('404: Resource not found', 404);
         }
 
-        return $this->json($movie);
+        return $this->serializeData($movie);
     }
 
     public function update(EntityManagerInterface $entityManager, Request $request, MovieRepository $movieRepository, string $uuid, ValidatorInterface $validator) {
         $movie = $movieRepository->findByUuid($uuid);
 
         if(!$movie) {
-            return $this->json('400: Bad request', 400);
+            return $this->json('404: Resource not found', 404);
         }
 
         $form = $this->createForm(MovieType::class, $movie);
@@ -58,7 +61,7 @@ class MovieController extends AbstractController
         if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($movie);
             $entityManager->flush();
-            return $this->json($movie);
+            return $this->serializeData($movie);
         }
 
         return $this->json('400: Bad request', 400);
@@ -68,7 +71,7 @@ class MovieController extends AbstractController
         $movie = $movieRepository->findByUuid($uuid);
 
         if(!$movie) {
-            return $this->json('400: Bad request', 400);
+            return $this->json('404: Resource not found', 404);
         }
 
         $entityManager->remove($movie);

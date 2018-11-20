@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Actor;
 use App\Form\ActorType;
 use App\Repository\ActorRepository;
+use App\Traits\JsonSerializerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +13,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ActorController extends AbstractController
 {
+    use JsonSerializerTrait;
+
     public function index(ActorRepository $actorRepository) {
         $actors = $actorRepository->findAll();
-        return $this->json($actors);
+        return $this->serializeData($actors);
     }
 
     public function create(EntityManagerInterface $entityManager, Request $request, ValidatorInterface $validator) {
@@ -27,7 +30,7 @@ class ActorController extends AbstractController
         if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($actor);
             $entityManager->flush();
-            return $this->json($actor);
+            return $this->serializeData($actor);
         }
 
         return $this->json('400: Bad request', 400);
@@ -39,7 +42,7 @@ class ActorController extends AbstractController
             return $this->json('400: Bad request', 400);
         }
 
-        return $this->json($actor);
+        return $this->serializeData($actor);
     }
 
     public function update(EntityManagerInterface $entityManager, Request $request, ActorRepository $actorRepository, string $uuid, ValidatorInterface $validator) {
@@ -57,7 +60,7 @@ class ActorController extends AbstractController
         if (count($errors) === 0 && $form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($actor);
             $entityManager->flush();
-            return $this->json($actor);
+            return $this->serializeData($actor);
         }
 
         return $this->json('400: Bad request', 400);
