@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="615ffac3-37fa-4619-b1fc-7736a6de1d92" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/symfony-course.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony-course.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MovieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MovieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PlaylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlaylistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,21 +24,21 @@
     <session id="1841993898">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.11" value="2" />
+          <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="env" value="5" />
+          <entry key="env" value="6" />
           <entry key="gitignore" value="2" />
           <entry key="json" value="4" />
           <entry key="php" value="80" />
-          <entry key="yaml" value="26" />
+          <entry key="yaml" value="27" />
           <entry key="yml" value="1" />
         </counts>
       </usages-collector>
@@ -42,13 +46,13 @@
         <counts>
           <entry key="JSON" value="4" />
           <entry key="PHP" value="80" />
-          <entry key="PLAIN_TEXT" value="7" />
-          <entry key="YAML" value="27" />
+          <entry key="PLAIN_TEXT" value="8" />
+          <entry key="YAML" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="env" value="27" />
+          <entry key="env" value="30" />
           <entry key="gitignore" value="4" />
           <entry key="php" value="7641" />
           <entry key="yaml" value="646" />
@@ -58,7 +62,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PHP" value="7641" />
-          <entry key="PLAIN_TEXT" value="31" />
+          <entry key="PLAIN_TEXT" value="34" />
           <entry key="YAML" value="758" />
         </counts>
       </usages-collector>
@@ -69,8 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/MovieController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1474">
-              <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+            <state relative-caret-position="651">
+              <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
               <folding>
                 <element signature="e#34#55#0#PHP" expanded="true" />
               </folding>
@@ -81,7 +85,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/PlaylistController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="857">
               <caret line="198" column="93" selection-start-line="198" selection-start-column="93" selection-end-line="198" selection-end-column="93" />
               <folding>
                 <element signature="e#34#55#0#PHP" expanded="true" />
@@ -93,7 +97,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2793">
+            <state relative-caret-position="2562">
               <caret line="133" column="85" selection-start-line="133" selection-start-column="85" selection-end-line="133" selection-end-column="85" />
               <folding>
                 <element signature="e#34#58#0#PHP" expanded="true" />
@@ -141,7 +145,6 @@
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/config/packages/framework.yaml" />
         <option value="$PROJECT_DIR$/config/packages/jms_serializer.yaml" />
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/src/Entity/Movie.php" />
         <option value="$PROJECT_DIR$/config/routes/routing.yaml" />
         <option value="$PROJECT_DIR$/src/Repository/PlaylistRepository.php" />
@@ -155,6 +158,7 @@
         <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/Controller/MovieController.php" />
         <option value="$PROJECT_DIR$/src/Controller/PlaylistController.php" />
+        <option value="$PROJECT_DIR$/.env" />
       </list>
     </option>
   </component>
@@ -277,6 +281,7 @@
       <path value="$PROJECT_DIR$/vendor/exsyst/swagger" />
       <path value="$PROJECT_DIR$/vendor/nelmio/api-doc-bundle" />
       <path value="$PROJECT_DIR$/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/vendor/nelmio/cors-bundle" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
@@ -406,18 +411,19 @@
       <workItem from="1542616230994" duration="244000" />
       <workItem from="1542620046274" duration="17237000" />
       <workItem from="1542699774331" duration="17821000" />
-      <workItem from="1542724960853" duration="2885000" />
+      <workItem from="1542724960853" duration="3025000" />
+      <workItem from="1542785890283" duration="1705000" />
+      <workItem from="1543130977644" duration="117000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38187000" />
+    <option name="totallyTimeSpent" value="40149000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25885227" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26495728" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -596,13 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/packages/routing.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -663,9 +662,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1092">
           <caret line="56" column="89" selection-start-line="56" selection-start-column="79" selection-end-line="56" selection-end-column="89" />
-          <folding>
-            <element signature="e#30#78#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -697,13 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/packages/nelmio_api_doc.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -718,9 +707,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/nelmio_api_doc.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/MovieController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+          <folding>
+            <element signature="e#34#55#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2793">
+        <state relative-caret-position="2562">
           <caret line="133" column="85" selection-start-line="133" selection-start-column="85" selection-end-line="133" selection-end-column="85" />
           <folding>
             <element signature="e#34#58#0#PHP" expanded="true" />
@@ -728,19 +741,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/MovieController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1474">
-          <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-          <folding>
-            <element signature="e#34#55#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/PlaylistController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="857">
           <caret line="198" column="93" selection-start-line="198" selection-start-column="93" selection-end-line="198" selection-end-column="93" />
           <folding>
             <element signature="e#34#55#0#PHP" expanded="true" />
